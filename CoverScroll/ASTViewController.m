@@ -33,6 +33,14 @@ static NSString * const ASTCoverScrollDemoURLString = @"http://theguardian.com/"
 	// load something in the web view
 	NSURL *someURL = [NSURL URLWithString:ASTCoverScrollDemoURLString];
 	[self.webView loadRequest:[NSURLRequest requestWithURL:someURL]];
+
+	// hide the web view's shadows - jodm solution
+	// http://stackoverflow.com/a/3521263/1914
+	for (UIView *view in [self.webView.subviews[0] subviews]) {
+		if ([view isKindOfClass:[UIImageView class]]) {
+			view.hidden = YES;
+		}
+	}
 }
 
 
