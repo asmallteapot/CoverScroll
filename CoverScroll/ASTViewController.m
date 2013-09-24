@@ -13,7 +13,7 @@ static NSString * const ASTCoverScrollDemoImageName = @"florida-cities";
 static NSString * const ASTCoverScrollDemoURLString = @"http://theguardian.com/";
 
 
-@interface ASTViewController ()
+@interface ASTViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @end
@@ -28,6 +28,7 @@ static NSString * const ASTCoverScrollDemoURLString = @"http://theguardian.com/"
 	self.imageView.image = [UIImage imageNamed:ASTCoverScrollDemoImageName];
 	self.webView.backgroundColor = [UIColor clearColor];
 	self.webView.scrollView.contentInset = UIEdgeInsetsMake(120.0, 0.0, 0.0, 0.0);
+	self.webView.scrollView.delegate = self;
 
 	// load something in the web view
 	NSURL *someURL = [NSURL URLWithString:ASTCoverScrollDemoURLString];
@@ -38,6 +39,16 @@ static NSString * const ASTCoverScrollDemoURLString = @"http://theguardian.com/"
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - UIScrollView delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	if (scrollView.contentOffset.y < -240.0) {
+		CGPoint offset = scrollView.contentOffset;
+		offset.y = -240.0;
+		scrollView.contentOffset = offset;
+	}
 }
 
 @end
